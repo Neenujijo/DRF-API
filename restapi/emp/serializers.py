@@ -1,7 +1,6 @@
 from rest_framework import serializers
-
 from .models import emplyee_usereg
-
+from rest_framework.exceptions import NotAuthenticated
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -38,10 +37,24 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(max_length=200)
-
+    
     class Meta:
         model=emplyee_usereg
         fields=('username', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
+    
+    def validate(self,data):
+        username = data.get("username",None)
+        password = data.get("password",None)
+
+        if emplyee_usereg.objects.filter(username=username).filter(password=password).first():
+            return True
+        raise NotAuthenticated
+
+
+
+    
+
+
 
     
