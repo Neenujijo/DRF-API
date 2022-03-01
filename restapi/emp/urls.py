@@ -1,13 +1,14 @@
-from .views import LoginAPIView, RegisterView,EmployeeListView,LogoutAPIView,EmployeeDetailsView
-from django.urls import path
-from rest_framework.urlpatterns import format_suffix_patterns
+from django.urls import path, include
+from . import views
+from rest_framework import routers
+
+
+router = routers.DefaultRouter()
+router.register('register', views.RegisterView)
+router.register('profile', views.EmployeeProfileView)
+router.register('skills', views.EmployeeSkillsView)
 
 urlpatterns = [
-    path('register/',RegisterView.as_view(), name="register"),
-    path('employees/',EmployeeListView.as_view(), name="employees"),
-    path('login/', LoginAPIView.as_view(), name='login'),
-    path('logout/', LogoutAPIView.as_view(), name='logout'),
-    path('employee_details/<int:pk>/',EmployeeDetailsView.as_view(),name='employee_details'),
-      
+    path('', include(router.urls))
 ]
 

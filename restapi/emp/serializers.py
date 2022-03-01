@@ -1,60 +1,26 @@
 from rest_framework import serializers
-from .models import emplyee_usereg
-from rest_framework.exceptions import NotAuthenticated
+from .models import EmplyeeRegistration,EmployeeProfile,EmployeeSkills
 
 
-class UserRegisterSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(max_length=200)
-    last_name = serializers.CharField(max_length=200)
-    username = serializers.CharField(max_length=200)
-    password = serializers.CharField(max_length=200)
-    # confirm_password=serializers.CharField(max_length=200)
-    dob = serializers.DateField(format="%d-%m-%Y", input_formats=['%d-%m-%Y', 'iso-8601'])
-    gender = serializers.CharField(max_length=200)
-    email = serializers.EmailField(max_length=30)
-    phone_no = serializers.IntegerField()
-    
 
-    def create(self, validated_data):
-        user = emplyee_usereg.objects.create(
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            username=validated_data['username'],
-            dob=validated_data['dob'],
-            gender=validated_data['gender'],
-            email=validated_data['email'],
-            phone_no=validated_data['phone_no'],
-            password=validated_data['password']
-        )
-
+class UserRegisterSerializer(serializers.HyperlinkedModelSerializer):
+   
         
-        user.save()
-
-        return user
     class Meta:
-        model=emplyee_usereg
-        fields='__all__'
+        model=EmplyeeRegistration
+        fields=('id','url','First_name','Last_name','Emp_code','Username','Password','Email')
 
 
-class LoginSerializer(serializers.ModelSerializer):
     
+class EmployeeProfileSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
-        model=emplyee_usereg
-        fields=('username', 'password')
-        extra_kwargs = {'password': {'write_only': True}}
-    
-    def validate(self,data):
-        username = data.get("username",None)
-        password = data.get("password",None)
-
-        if emplyee_usereg.objects.filter(username=username).filter(password=password).first():
-            return True
-        raise NotAuthenticated
+        model=EmployeeProfile
+        fields=('id','url','Employee','Emp_designation','Emp_department','Dob','Gender','Phone_no')
 
 
 
-    
-
-
-
-    
+class EmployeeSkillSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = EmployeeSkills
+        fields = ('id','url','Employee','skill')
