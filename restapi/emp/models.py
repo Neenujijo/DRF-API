@@ -6,38 +6,33 @@ from django.db import models
 
 class EmplyeeRegistration(models.Model):
 
-    First_name=models.CharField(max_length=100)
-    Last_name=models.CharField(max_length=100)
-    Emp_code=models.CharField(max_length=300)
-    Username=models.CharField(max_length=50)
-    Password=models.CharField(max_length=50)
-    Email=models.EmailField(max_length=30)
-    
-    
-                                                                    
+    first_name=models.CharField(max_length=100)
+    last_name=models.CharField(max_length=100)
+    employee_code=models.CharField(max_length=300)
+    username=models.CharField(max_length=50)
+    password=models.CharField(max_length=50)
+    email=models.EmailField(max_length=30)
+                                                                     
     def __str__(self):
-        return self.First_name
+        return self.first_name
 
 
 class EmployeeProfile(models.Model):
-    Emp_designation=models.CharField(max_length=100)
-    Emp_department=models.CharField(max_length=50)
-    Dob=models.DateField(max_length=8)
-    Gender=models.CharField(max_length=10)
-    Phone_no=models.CharField(max_length=50)
-    Employee = models.ForeignKey(EmplyeeRegistration, on_delete=models.CASCADE,null=True)
+    employee_designation=models.CharField(max_length=100)
+    employee_department=models.CharField(max_length=50)
+    dob=models.DateField(max_length=8)
+    gender=models.CharField(max_length=10)
+    phone_number=models.CharField(max_length=50)
+    employee = models.ForeignKey(EmplyeeRegistration, on_delete=models.CASCADE,null=True)
     
-    
-
     def __str__(self):
-        return self.Emp_designation
+        return self.employee_designation
 
 
 class EmployeeSkills(models.Model):
     skill=models.CharField(max_length=50)
     # profile=models.ManyToManyField(EmployeeProfile)
-    Employee = models.ForeignKey(EmplyeeRegistration, on_delete=models.CASCADE,null=True)
-
+    employee = models.ForeignKey(EmplyeeRegistration, on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         return self.skill

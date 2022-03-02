@@ -4,11 +4,10 @@ from .models import EmployeeProfile, EmployeeSkills, EmplyeeRegistration
 from .serializers import UserRegisterSerializer,EmployeeProfileSerializer,EmployeeSkillSerializer
 
 
-
 class RegisterView(viewsets.ModelViewSet):# create rest_framework views
     queryset = EmplyeeRegistration.objects.all()
     serializer_class = UserRegisterSerializer
-
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
 class EmployeeProfileView(viewsets.ModelViewSet):
@@ -19,3 +18,5 @@ class EmployeeProfileView(viewsets.ModelViewSet):
 class EmployeeSkillsView(viewsets.ModelViewSet):
     queryset = EmployeeSkills.objects.all()
     serializer_class = EmployeeSkillSerializer
+
+
