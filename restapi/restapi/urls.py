@@ -38,10 +38,15 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     path('api', include('emp.urls')),
     path('api-auth/', include('rest_framework.urls',namespace='rest_framework')),
    path('api/token/',TokenObtainPairView.as_view(), name='token_obtain_pair'),
    path('api/token/refresh/',TokenRefreshView.as_view(), name='token_refresh'),
+=======
+    path('api/', include('emp.urls')),
+    # path('api-auth/', include('rest_framework.urls')),
+>>>>>>> 238d36e8cdc04bb6815e92d261a0dea5d0db4a52
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     
     
